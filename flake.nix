@@ -95,7 +95,7 @@
             features ? [ ],
             noDefaultFeatures ? false,
             profile ? "release",
-            
+            mainProgram ? null,
           }:
           (platform.buildRustPackage {
             pname =
@@ -182,7 +182,7 @@
                 asl20
               ];
               maintainers = with maintainers; [ poelzi ];
-              mainProgram = "sui";
+              mainProgram = if ! isNull mainProgram then mainProgram else name;
             };
           });
         mkDocker =
@@ -307,6 +307,9 @@
         };
       in
       {
+        apps.walrus = flake-utils.lib.mkApp {
+          drv = walruspkgs.walrus;
+        };
         devShells.default = pkgs.mkShell.override { inherit stdenv; } {
           inherit nativeBuildInputs;
           RUST_SRC_PATH = "${fenix.packages.${system}.stable.rust-src}/bin/rust-lib/src";

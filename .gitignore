@@ -36,6 +36,8 @@ venv/
 **/tmp
 out/
 **/node_modules
+result*
+.direnv/
 
 # Deployment assets
 crates/walrus-orchestrator/assets/
